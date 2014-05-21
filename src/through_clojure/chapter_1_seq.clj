@@ -13,7 +13,9 @@
 
 
 
+
 (list)
+
 
 
 
@@ -32,7 +34,6 @@
 
 
 (list* [1 2 3])
-
 
 
 
@@ -136,6 +137,7 @@
 
 (sequential? [1 2 3])
 
+IPersistenseList
 
 
 
@@ -170,19 +172,19 @@
 
 
 ;; Vector as function
-([1 2 3] 0)
+([1 2 3] 25)
 
 
-(get [1 2 3] 0)
+(get [1 2 3] 23)
 
 
-(nth [1 2 3] 0)
+(nth [1 2 3] 23 10)
 
 
 
 
 ;; Map as function
-({:one 1 :two 2} :one)
+({:one 1 :two 2} :three)
 
 
 
@@ -203,7 +205,7 @@
 
 ;; Equality
 ;; Always true if belongs to one partition
-(= '(1 2 3) '(1 2 3)) ; =>
+(= '(1 2 3) '(1 2 3))
 (= '(1 2 3) [1 2 3])
 
 
@@ -222,6 +224,7 @@
 
 ;; Order doesn't matters
 (= #{1 2 3} #{3 2 1})
+(= [1 2 3] [3 2 1])
 
 
 
@@ -240,11 +243,15 @@
 ;; Seq - is basicaly an class that realizes interface called ISeq
 ;; It requires only two functions:
 (first [1 2 3])
+(first [])
+
 (rest [1 2 3])
+(rest [])
 
 ;; And has a constructor for creating seq
 ;; From list
 (seq '(1 2 3))
+(type *1)
 
 
 
@@ -374,7 +381,10 @@
 
 (rest ten-numbers)
 
+(rest [])
+
 (next ten-numbers)
+(next [])
 
 
 (rest [])
@@ -492,6 +502,7 @@
 
 
 
+
 (defn mult-by-two [a] (* 2 a))
 (take 10
       (iterate mult-by-two 1))
@@ -545,10 +556,12 @@
 
 
 ;; Write a code that returns line like this:
-;; "Aa, Bb, Cc, Dd,..., Zz
+;; Aa, Bb, Cc, Dd,..., Zz
 
 (defn join' [sep coll]
   (apply str (interpose sep coll)))
+
+
 
 
 
@@ -626,7 +639,7 @@
 
 
 
-(flatten [1 2 3 [4 5 [6 7 [8 9]]]])
+(flatten [1 2 3 [4 5 [6 7 [8 9 "asd"]]]])
 
 
 
@@ -659,6 +672,7 @@
 
 
 (contains? [4 3 2 1] 4)
+
 
 
 
@@ -867,8 +881,6 @@
 ;; Reducers
 
 
-(require '[clojure.string :as s])
-
 (def cart [{:name "Tomato"
             :quantity 10
             :price 23}
@@ -886,8 +898,6 @@
 
 
 (map total cart)
-
-
 
 
 
@@ -973,7 +983,7 @@
 
 
 (count (generate-cart 10000))
-(generate-cart 2)
+
 
 
 ;; 50 000 Items
@@ -1055,3 +1065,8 @@
 ;;   - zipers
 ;;   - queues
 ;;   - reducers
+
+(clojure.lang.PersistentQueue/EMPTY)
+
+
+;; fin
